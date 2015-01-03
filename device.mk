@@ -150,12 +150,6 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
     frameworks/av/media/libstagefright/data/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml
-    
-# mkbootimg   
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/dt.img:$(PRODUCT_OUT)/dt.img \
-    $(LOCAL_PATH)/mkbootimg_dtb:$(PRODUCT_OUT)/mkbootimg_dtb \
-    $(LOCAL_PATH)/kernel:$(PRODUCT_OUT)/zImage
 
 # OMX
 PRODUCT_PACKAGES += \
@@ -217,7 +211,6 @@ PRODUCT_PACKAGES += \
     fstab.qcom \
     init.qcom.rc \
     init.qcom.usb.rc \
-    init.wifi_symlink.sh \
     ueventd.qcom.rc
 
 # Thermal
