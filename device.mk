@@ -29,6 +29,12 @@ PRODUCT_AAPT_PREF_CONFIG := xhdpi
 # Dalvik
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
+# ANT+
+PRODUCT_PACKAGES += \
+    AntHalService \
+    com.dsi.ant.antradio_library \
+    libantradio
+
 # Audio
 PRODUCT_PACKAGES += \
     audio.primary.msm8226 \
@@ -61,6 +67,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     libxml2
 
+# Charger
+PRODUCT_PACKAGES += \
+    charger_res_images
+
 # CRDA
 PRODUCT_PACKAGES += \
     crda \
@@ -70,11 +80,12 @@ PRODUCT_PACKAGES += \
 
 # Display
 PRODUCT_PACKAGES += \
-    copybit.msm8226 \
-    gralloc.msm8226 \
+    libgenlock \
+    liboverlay \
     hwcomposer.msm8226 \
-    memtrack.msm8226 \
-    liboverlay
+    gralloc.msm8226 \
+    copybit.msm8226 \
+    memtrack.msm8226
 
 # Ebtables
 PRODUCT_PACKAGES += \
@@ -88,6 +99,16 @@ PRODUCT_PACKAGES += \
     make_ext4fs \
     resize2fs \
     setup_fs
+
+# FM
+PRODUCT_PACKAGES += \
+    FM2 \
+    FMRecord \
+    libqcomfm_jni \
+    qcom.fmradio
+
+PRODUCT_PACKAGES += \
+    init.qcom.fm.sh
 
 # GPS
 PRODUCT_PACKAGES += \
@@ -151,10 +172,12 @@ PRODUCT_BOOT_JARS += \
 
 # Permissions
 PRODUCT_COPY_FILES += \
+    external/ant-wireless/antradio-library/com.dsi.ant.antradio_library.xml:system/etc/permissions/com.dsi.ant.antradio_library.xml \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
+    frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
     frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
     frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
@@ -173,11 +196,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     power.msm8226
 
-# QRNG
-PRODUCT_PACKAGES += \
-    qrngd \
-    qrngp
-
 # Qualcomm
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.timed.enable=true \
@@ -185,11 +203,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Ramdisk
 PRODUCT_PACKAGES += \
-    chargeonlymode \
     fstab.qcom \
     init.qcom.rc \
     init.qcom.usb.rc \
-    init.wifi_symlink.sh \
     ueventd.qcom.rc
 
 # Thermal
@@ -224,6 +240,7 @@ PRODUCT_PACKAGES += \
     libcurl \
     libqsap_sdk \
     libQWiFiSoftApCfg \
+    libwcnss_qmi \
     wcnss_service
 
 PRODUCT_PROPERTY_OVERRIDES += \
