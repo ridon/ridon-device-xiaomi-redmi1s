@@ -153,8 +153,10 @@ PRODUCT_PACKAGES += \
     libstagefrighthw \
     qcmediaplayer
 
-PRODUCT_BOOT_JARS += \
-    qcmediaplayer
+#PRODUCT_BOOT_JARS += \
+#    qcmediaplayer
+
+#PRODUCT_BOOT_JARS := $(subst $(space),:,$(PRODUCT_BOOT_JARS))
 
 # Permissions
 PRODUCT_COPY_FILES += \
