@@ -1,1 +1,1 @@
-add_lunch_combo ridon-armani-userdebug
+add_lunch_combo ridon_armani-userdebug
