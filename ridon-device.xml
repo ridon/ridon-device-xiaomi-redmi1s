@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <project name="ridon/ridon-device-xiaomi-redmi1s" path="device/xiaomi/armani" remote="ridon-remote" revision="ridon-5.0" />
+  <project name="ridon/ridon-kernel-xiaomi-armani" path="kernel/xiaomi/armani" remote="ridon-remote" revision="ridon-5.0" />
+  <project name="ridon/ridon-proprietary-vendor-xiaomi" path="vendor/xiaomi" remote="ridon-remote" revision="ridon-5.0" />
+  <project name="ridon/ridon-device-qcom-common" path="device/qcom/common" remote="ridon-remote" revision="ridon-5.0" />
+  <project name="ridon/ridon-hardware_qcom_fm" path="hardware/qcom/fm" remote="ridon-remote" revision="ridon-5.0" />
+  <project path="external/ant-wireless/antradio-library" name="CyanogenMod/android_external_ant-wireless_antradio-library" remote="cyanogen" revision="cm-12.0"  />
+</manifest>
+
