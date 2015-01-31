@@ -311,13 +311,6 @@ service fm_dl /system/bin/sh /system/etc/init.qcom.fm.sh
     disabled
     oneshot
 
-service hostapd /system/bin/hostapd -dd /data/hostapd/hostapd.conf
-    class late_start
-    user root
-    group root
-    oneshot
-    disabled
-
 service ril-daemon1 /system/bin/rild -c 1
     class main
     socket rild1 stream 660 root radio

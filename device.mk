@@ -33,9 +33,9 @@ PRODUCT_PACKAGES += \
 
 # Audio
 PRODUCT_PACKAGES += \
-    audio.primary.msm8226 \
-    audio_policy.msm8226 \
+    audiod \
     audio.a2dp.default \
+    audio.primary.msm8226 \
     audio.r_submix.default \
     audio.usb.default
 
@@ -76,11 +76,9 @@ PRODUCT_PACKAGES += \
 
 # Display
 PRODUCT_PACKAGES += \
-    libgenlock \
-    liboverlay \
-    hwcomposer.msm8226 \
-    gralloc.msm8226 \
     copybit.msm8226 \
+    gralloc.msm8226 \
+    hwcomposer.msm8226 \
     memtrack.msm8226
 
 # Ebtables
@@ -149,14 +147,8 @@ PRODUCT_COPY_FILES += \
 
 # OMX
 PRODUCT_PACKAGES += \
-    libc2dcolorconvert \
     libdashplayer \
-    libdivxdrmdecrypt \
-    libOmxAacEnc \
-    libOmxAmrEnc \
     libOmxCore \
-    libOmxEvrcEnc \
-    libOmxQcelp13Enc \
     libOmxVdec \
     libOmxVdecHevc \
     libOmxVenc \
@@ -224,8 +216,6 @@ PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 # Wifi
 PRODUCT_PACKAGES += \
-    hostapd.accept \
-    hostapd.deny \
     hostapd_default.conf \
     p2p_supplicant_overlay.conf \
     wpa_supplicant_overlay.conf \
