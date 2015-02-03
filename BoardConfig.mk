@@ -30,6 +30,7 @@ TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_SMP := true
 TARGET_CPU_VARIANT := krait
+TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
 
 # Kernel
 TARGET_KERNEL_SOURCE := kernel/xiaomi/armani
@@ -42,7 +43,7 @@ BOARD_CUSTOM_BOOTIMG_MK := device/xiaomi/armani/mkbootimg.mk
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x01e00000
 
 # ANT+
-BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
+BOARD_ANT_WIRELESS_DEVICE := "qualcomm-smd"
 
 # Audio
 BOARD_USES_ALSA_AUDIO := true
@@ -54,6 +55,8 @@ AUDIO_FEATURE_DISABLED_DS1_DOLBY_DDP := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/xiaomi/armani/bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
+BLUETOOTH_HCI_USE_MCT := true
+QCOM_BT_USE_SMD_TTY := true
 
 # Camera
 USE_DEVICE_SPECIFIC_CAMERA := true
@@ -61,6 +64,17 @@ COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
 
 # Classpath
 #PRODUCT_BOOT_JARS := $(subst $(space),:,$(PRODUCT_BOOT_JARS))
+BOARD_USES_LEGACY_MMAP := true
+
+# Enable dex-preoptimization to speed up first boot sequence
+ifeq ($(HOST_OS),linux)
+  ifeq ($(TARGET_BUILD_VARIANT),user)
+    ifeq ($(WITH_DEXPREOPT),)
+      WITH_DEXPREOPT := true
+    endif
+  endif
+endif
+WITH_DEXPREOPT_BOOT_IMG_ONLY ?= true
 
 # Enable suspend during charger mode
 BOARD_CHARGER_ENABLE_SUSPEND := true
@@ -80,14 +94,16 @@ BOARD_FLASH_BLOCK_SIZE             := 131072
 # FM
 BOARD_HAVE_QCOM_FM := true
 
+# Fonts
+EXTENDED_FONT_FOOTPRINT := true
+
 # GPS
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := $(TARGET_BOARD_PLATFORM)
 TARGET_NO_RPC := true
 
 # Graphics
 BOARD_EGL_CFG := device/xiaomi/armani/configs/egl.cfg
-TARGET_QCOM_DISPLAY_VARIANT := caf-legacy
-TARGET_USES_C2D_COMPOSITION := true
+TARGET_USES_C2D_COMPOSITION := false
 TARGET_USES_ION := true
 USE_OPENGL_RENDERER := true
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
@@ -102,9 +118,6 @@ MAX_EGL_CACHE_KEY_SIZE := 12*1024
 # binaries. Decrease the size if RAM or Flash Storage size is a limitation
 # of the device.
 MAX_EGL_CACHE_SIZE := 2048*1024
-
-# Hardware tunables
-BOARD_HARDWARE_CLASS := device/xiaomi/armani/cmhw/
 
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
@@ -128,6 +141,10 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_SUPPRESS_EMMC_WIPE := true
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
 COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
+
+# SELinux
+include device/qcom/sepolicy/sepolicy.mk
+BOARD_SEPOLICY_DIRS += device/xiaomi/armani/sepolicy
 
 # Time services
 BOARD_USES_QC_TIME_SERVICES := true

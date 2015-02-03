@@ -21,8 +21,6 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
-PRODUCT_TAGS += dalvik.gc.type-precise
-
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
 # ANT+
@@ -33,9 +31,9 @@ PRODUCT_PACKAGES += \
 
 # Audio
 PRODUCT_PACKAGES += \
-    audio.primary.msm8226 \
-    audio_policy.msm8226 \
+    audiod \
     audio.a2dp.default \
+    audio.primary.msm8226 \
     audio.r_submix.default \
     audio.usb.default
 
@@ -52,15 +50,19 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/mixer_paths.xml:system/etc/mixer_paths.xml
 
 # Bluetooth
-PRODUCT_PROPERTY_OVERRIDES += \
-    bluetooth.hfp.client=1
-
 PRODUCT_PACKAGES += \
     init.qcom.bt.sh
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    bluetooth.hfp.client=1
 
 # Camera
 PRODUCT_PACKAGES += \
     libxml2
+
+# Charger
+PRODUCT_PACKAGES += \
+    charger_res_images
 
 # CRDA
 PRODUCT_PACKAGES += \
@@ -74,8 +76,7 @@ PRODUCT_PACKAGES += \
     copybit.msm8226 \
     gralloc.msm8226 \
     hwcomposer.msm8226 \
-    memtrack.msm8226 \
-    liboverlay
+    memtrack.msm8226
 
 # Ebtables
 PRODUCT_PACKAGES += \
@@ -135,28 +136,24 @@ PRODUCT_PACKAGES += \
 # Media
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
-    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml
+    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml
 
 # OMX
 PRODUCT_PACKAGES += \
-    libc2dcolorconvert \
     libdashplayer \
-    libdivxdrmdecrypt \
-    libOmxAacEnc \
-    libOmxAmrEnc \
     libOmxCore \
-    libOmxEvrcEnc \
-    libOmxQcelp13Enc \
     libOmxVdec \
     libOmxVdecHevc \
     libOmxVenc \
     libstagefrighthw \
     qcmediaplayer
 
-#PRODUCT_BOOT_JARS += \
-#    qcmediaplayer
-
-#PRODUCT_BOOT_JARS := $(subst $(space),:,$(PRODUCT_BOOT_JARS))
+PRODUCT_BOOT_JARS += \
+    qcmediaplayer
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -165,6 +162,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
+    frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
     frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
     frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
@@ -183,31 +181,17 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     power.msm8226
 
-# QRNG
-PRODUCT_PACKAGES += \
-    qrngd \
-    qrngp
-
 # Qualcomm
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.timed.enable=true \
-    qcom.hw.aac.encoder=true \
-    ro.qualcomm.cabl=0 \
     ro.vendor.extension_library=/vendor/lib/libqc-opt.so
 
 # Ramdisk
 PRODUCT_PACKAGES += \
-    chargeonlymode \
     fstab.qcom \
     init.qcom.rc \
     init.qcom.usb.rc \
     ueventd.qcom.rc
-
-# Recovery
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.cwm.enable_key_repeat=true \
-    ro.cwm.forbid_mount=/persist,/firmware \
-    ro.cwm.forbid_format=/fsg,/firmware,/boot,/persist
 
 # Sensors
 PRODUCT_COPY_FILES += \
@@ -217,30 +201,30 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/thermal-engine-8226.conf:system/etc/thermal-engine-8226.conf
 
-# Torch
-PRODUCT_PACKAGES += \
-    Torch
-
 # USB
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp
-
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
+
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    persist.sys.usb.config=mtp
 
 # UTC date
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 # Wifi
 PRODUCT_PACKAGES += \
-    hostapd.accept \
-    hostapd.deny \
     hostapd_default.conf \
     p2p_supplicant_overlay.conf \
     wpa_supplicant_overlay.conf \
     WCNSS_cfg.dat \
     WCNSS_qcom_cfg.ini \
     WCNSS_qcom_wlan_nv.bin
+
+PRODUCT_PACKAGES += \
+    dhcpcd.conf \
+    hostapd \
+    wpa_supplicant \
+    wpa_supplicant.conf
 
 PRODUCT_PACKAGES += \
     libcurl \
